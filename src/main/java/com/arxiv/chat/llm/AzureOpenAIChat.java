@@ -18,6 +18,7 @@ public class AzureOpenAIChat extends AbstractChat {
                 .apiKey(apiKey != null ? apiKey : System.getenv("AZURE_OPEN_AI_KEY"))
                 .deploymentName(deploymentName != null ? deploymentName : System.getenv("AZURE_OPEN_AI_DEPLOYMENT_NAME"))
                 .endpoint(endpoint != null ? endpoint : System.getenv("AZURE_OPEN_AI_ENDPOINT"))
+                .logRequestsAndResponses(true)
                 .build());
     }
 }
