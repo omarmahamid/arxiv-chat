@@ -37,7 +37,7 @@ The application enables users to upload arxiv papers and ask questions about the
 
 ## Prerequisites
 
-- **Ollama**: Install Ollama locally. OR Obtain an Azure OpenAI license
+- **Azure OpenAI / Ollama**: Install Ollama locally. OR Obtain an Azure OpenAI license
 - **Java 21**: Ensure you have Java 21 installed.
 
 ## LLM Options
