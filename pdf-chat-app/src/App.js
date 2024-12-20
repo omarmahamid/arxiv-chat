@@ -1,21 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import FileUpload from './FileUpload';
 import Chat from './Chat';
 import './App.css';
+import { Container, Typography } from '@mui/material';
 
 function App() {
-  const [sessionId, setSessionId] = useState(null);
-
-  const handleFileUpload = (sessionId) => {
-    setSessionId(sessionId);
-  };
-
   return (
-      <div className="App">
-        <h1>PDF Chat Application</h1>
-        <FileUpload onFileUpload={handleFileUpload} />
-        {sessionId && <Chat sessionId={sessionId} />}
-      </div>
+    <Container className="App" maxWidth="sm">
+      <Typography variant="h3" gutterBottom>PDF Chat Application</Typography>
+      <FileUpload />
+      <Chat />
+    </Container>
   );
 }
 

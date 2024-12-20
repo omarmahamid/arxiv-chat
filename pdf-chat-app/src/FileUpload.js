@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Button, Box } from '@mui/material';
+import './FileUpload.css'; // Import the CSS file for styling
 
 function FileUpload({ onFileUpload }) {
     const [file, setFile] = useState(null);
@@ -9,10 +11,13 @@ function FileUpload({ onFileUpload }) {
     };
 
     const handleFileUpload = async () => {
-        if (!file) return;
+        if (!file) {
+            console.log("should provide file");
+            return;
+        }
 
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('file', file, file.name);
 
         try {
             const response = await axios.post('http://localhost:8080/arxiv/inject', formData, {
@@ -20,7 +25,7 @@ function FileUpload({ onFileUpload }) {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            const sessionId = response.data.sessionId; // Assuming the server returns a sessionId
+            const sessionId = response.data.sessionId;
             onFileUpload(sessionId);
         } catch (error) {
             console.error('Error uploading file:', error);
@@ -28,10 +33,21 @@ function FileUpload({ onFileUpload }) {
     };
 
     return (
-        <div>
-            <input type="file" onChange={handleFileChange} />
-            <button onClick={handleFileUpload}>Upload PDF</button>
-        </div>
+        <Box className="file-upload-container">
+            <input
+                type="file"
+                onChange={handleFileChange}
+                style={{ marginBottom: '100px' }}
+            />
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={handleFileUpload}
+                className="file-upload-button"
+            >
+                Upload PDF
+            </Button>
+        </Box>
     );
 }
 
