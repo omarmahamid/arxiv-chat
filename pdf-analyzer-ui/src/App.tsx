@@ -9,7 +9,7 @@ function App() {
   const [input, setInput] = useState('');
   const [pendingFiles, setPendingFiles] = useState<File[]>([]);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim() && pendingFiles.length === 0) return;
 
     const newMessage: Message = {
@@ -30,16 +30,36 @@ function App() {
     setInput('');
     setPendingFiles([]);
 
-    // Simulate assistant response
-    setTimeout(() => {
-      const assistantMessage: Message = {
+    try {
+      const response = await fetch('http://localhost:8080/arxiv/question', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8'
+        },
+        body: JSON.stringify({ question: input.trim() })
+      });
+
+      if (response.ok) {
+        const responseData = await response.text();
+        const assistantMessage: Message = {
+          id: Date.now().toString(),
+          type: 'assistant',
+          content: responseData || 'Server response received.',
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, assistantMessage]);
+      } else {
+        throw new Error(`Server responded with status ${response.status}`);
+      }
+    } catch (error) {
+      const errorMessage: Message = {
         id: Date.now().toString(),
         type: 'assistant',
-        content: 'I received your message and files. How can I help you?',
+        content: `Error: ${error}`,
         timestamp: new Date()
       };
-      setMessages(prev => [...prev, assistantMessage]);
-    }, 1000);
+      setMessages(prev => [...prev, errorMessage]);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -48,7 +68,6 @@ function App() {
       handleSend();
     }
   };
-
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <div className="flex-1 container mx-auto max-w-4xl p-4 flex flex-col">

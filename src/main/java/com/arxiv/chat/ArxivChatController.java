@@ -33,7 +33,10 @@ public class ArxivChatController {
     }
 
     @PostMapping("/question")
-    public ResponseEntity<String> question(@RequestBody String question) {
-        return ResponseEntity.ok(chatModel.chat(question));
+    public ResponseEntity<String> question(@RequestBody Question question) {
+        return ResponseEntity.ok(chatModel.chat(question.question));
     }
+
+
+    record Question(String question){}
 }
