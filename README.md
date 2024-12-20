@@ -46,9 +46,43 @@ The application supports multiple LLM options:
 - **Azure OpenAI**: Configured via `AzureOpenAIChat` class.
 - **Ollama**: Configured via `OllamaChat` class.
 
+
 ## How to Build It
 
-To build and run the project, use the following command:
+1. **Clone the repository**:
+    ```sh
+    git clone https://github.com/omarmahamid/arxiv-chat
+    ```
+2. **Navigate to the project directory**:
+    ```sh
+    cd arxiv-chat
+    ```
+3. **Clean and install the project**:
+    ```sh
+    mvn clean install
+    ```
+4. **Run the application**:
+    ```sh
+    mvn spring-boot:run
+    ```
 
-```sh
-mvn spring-boot:run
+## Project Structure
+
+- **Frontend**: Located in the [`pdf-analyzer-ui`](pdf-analyzer-ui ) directory.
+- **Backend**: Located in the [`src/main/java/com/arxiv/chat`](src/main/java/com/arxiv/chat ) directory.
+
+## Configuration
+
+The application can be configured using the [`src/main/resources/application.properties`](src/main/resources/application.properties ) file located in [`src/main/resources`](src/main/resources ).
+
+## Dependencies
+
+The project uses the following dependencies:
+- `langchain4j`
+- `langchain4j-ollama`
+- `langchain4j-azure-open-ai`
+- `langchain4j-document-parser-apache-pdfbox`
+- `langchain4j-embeddings-bge-small-en-v15-q`
+- `spring-boot-starter-web`
+- `spring-boot-starter-test`
+- `slf4j-api`
